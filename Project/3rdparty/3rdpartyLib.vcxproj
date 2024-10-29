@@ -87,7 +87,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="3rdpartyLib.cpp" />
+    <ClCompile Include="..\3rdparty\glad\gl.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\3rdparty\glad\gl.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

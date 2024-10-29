@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\3rdparty\glad\gl.c">
+      <Filter>glad</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="glad">
+      <UniqueIdentifier>{c4a81865-9da9-4b77-8cd6-01c3e8055b8f}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\3rdparty\glad\gl.h">
+      <Filter>glad</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

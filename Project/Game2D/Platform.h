@@ -19,6 +19,10 @@ public:
 	void Update();
 	bool ShouldClose() const;
 
+	void Exit();
+
+	bool IsKeyPress(int key);
+
 private:
 	uint32_t    m_width;
 	uint32_t    m_height;

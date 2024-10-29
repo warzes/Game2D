@@ -11,13 +11,14 @@
 #include <string>
 #include <vector>
 
-#include <GLFW/glfw3.h>
-
 #if PLATFORM_WIN32
+#	include <glad/gl.h>
 #endif // PLATFORM_WIN32
 
 #if PLATFORM_EMSCRIPTEN
 #endif // PLATFORM_EMSCRIPTEN
+
+#include <GLFW/glfw3.h>
 
 #if defined(_MSC_VER)
 #	pragma warning(pop)
