@@ -10,6 +10,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Game2D", "Game2D\Game2D.vcx
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3rdpartyLib", "3rdparty\3rdpartyLib.vcxproj", "{4925CF58-8D4C-4C93-98B1-0FC2C32DBDE0}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{B1A68FC7-68E4-4DD2-AF05-FF47F3770FB7}"
+	ProjectSection(SolutionItems) = preProject
+		doc.md = doc.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|x64 = Debug|x64

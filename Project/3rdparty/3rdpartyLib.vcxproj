@@ -88,9 +88,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\3rdparty\glad\gl.c" />
+    <ClCompile Include="stb\stb.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdparty\glad\gl.h" />
+    <ClInclude Include="stb\stb_image.h" />
+    <ClInclude Include="stb\stb_truetype.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

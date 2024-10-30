@@ -4,15 +4,27 @@
     <ClCompile Include="..\3rdparty\glad\gl.c">
       <Filter>glad</Filter>
     </ClCompile>
+    <ClCompile Include="stb\stb.cpp">
+      <Filter>stb</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="glad">
       <UniqueIdentifier>{c4a81865-9da9-4b77-8cd6-01c3e8055b8f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="stb">
+      <UniqueIdentifier>{843323c8-c5c8-49bb-ae52-7a0b4d60d445}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\3rdparty\glad\gl.h">
       <Filter>glad</Filter>
+    </ClInclude>
+    <ClInclude Include="stb\stb_truetype.h">
+      <Filter>stb</Filter>
+    </ClInclude>
+    <ClInclude Include="stb\stb_image.h">
+      <Filter>stb</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
