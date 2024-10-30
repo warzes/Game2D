@@ -23,6 +23,9 @@ public:
 
 	bool IsKeyPress(int key);
 
+	uint32_t GetWindowWidth() const { return m_width; }
+	uint32_t GetWindowHeight() const { return m_height; }
+
 private:
 	uint32_t    m_width;
 	uint32_t    m_height;

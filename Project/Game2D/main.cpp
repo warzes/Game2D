@@ -8,6 +8,9 @@
 #include "Matrix2.h"
 #include "Matrix3.h"
 #include "Matrix4.h"
+#include "Shader.h"
+#include "Texture2D.h"
+#include "Framebuffer.h"
 
 #if defined(_MSC_VER)
 #	pragma comment( lib, "3rdpartyLib.lib" )
@@ -47,86 +50,13 @@ void main()
 }
 )";
 
-class Shader
-{
-public:
-	unsigned int ID;
-
-	Shader(const char* vertexCode, const char* fragmentCode);
-	
-	void Use();
-
-	void SetUniform(const std::string& name, bool value) const;
-	void SetUniform(const std::string& name, int value) const;
-	void SetUniform(const std::string& name, float value) const;
-};
-
-Shader::Shader(const char* vertexCode, const char* fragmentCode)
-{
-	int success;
-	char infoLog[512];
-
-	unsigned int vertex = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vertex, 1, &vertexCode, NULL);
-	glCompileShader(vertex);
-	glGetShaderiv(vertex, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(vertex, 512, NULL, infoLog);
-		Fatal("ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" + std::string(infoLog));
-	};
-
-	unsigned int fragment = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragment, 1, &fragmentCode, NULL);
-	glCompileShader(fragment);
-	glGetShaderiv(fragment, GL_COMPILE_STATUS, &success);
-	if (!success)
-	{
-		glGetShaderInfoLog(fragment, 512, NULL, infoLog);
-		Fatal("ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" + std::string(infoLog));
-	};
-
-	// shader Program
-	ID = glCreateProgram();
-	glAttachShader(ID, vertex);
-	glAttachShader(ID, fragment);
-	glLinkProgram(ID);
-	glGetProgramiv(ID, GL_LINK_STATUS, &success);
-	if (!success)
-	{
-		glGetProgramInfoLog(ID, 512, NULL, infoLog);
-		Fatal("ERROR::SHADER::PROGRAM::LINKING_FAILED\n" + std::string(infoLog));
-	}
-
-	glDeleteShader(vertex);
-	glDeleteShader(fragment);
-}
-
-void Shader::Use()
-{
-	glUseProgram(ID);
-}
-
-void Shader::SetUniform(const std::string& name, bool value) const
-{
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
-}
-
-void Shader::SetUniform(const std::string& name, int value) const
-{
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), value);
-}
-
-void Shader::SetUniform(const std::string& name, float value) const
-{
-	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
-}
-
 int main()
 {
 	Platform platform;
 	if (platform.Create({}))
 	{
+		glEnable(GL_DEPTH_TEST);
+
 		float vertices[] = {
 			 // vertex            // color            // texture coords
 			 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,       // top right
@@ -165,56 +95,48 @@ int main()
 		glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(6 * sizeof(float)));
 		glEnableVertexAttribArray(2);
 
-		Shader shader(vertexShaderSource, fragmentShaderSource);
+		Shader shader;
+		shader.Create(vertexShaderSource, fragmentShaderSource);
 
-		int width, height, nrChannels;
-		stbi_set_flip_vertically_on_load(true);
-		unsigned char* data = stbi_load("container.jpg", &width, &height, &nrChannels, 0);
+		Texture2D texture;
+		texture.Create("container.jpg");
 
-		unsigned int texture;
-		glGenTextures(1, &texture);
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR_MIPMAP_LINEAR);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-		if (data)
-		{
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
-			glGenerateMipmap(GL_TEXTURE_2D);
-		}
-		else
-		{
-			Fatal("Failed to load texture");
-		}
-
-		stbi_image_free(data);
-
-
-
+		Framebuffer fb;
+		fb.Create(120, 120);
+		
 		while (!platform.ShouldClose())
 		{
 			if (platform.IsKeyPress(GLFW_KEY_ESCAPE))
 				platform.Exit();
 
+			//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+			//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+			glEnable(GL_DEPTH_TEST);
+			fb.Bind();
+			{
+				shader.Bind();
+				texture.Bind();
+				glBindVertexArray(VAO);
+				glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+			}
+
+			glDisable(GL_DEPTH_TEST);
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+			glViewport(0, 0, platform.GetWindowWidth(), platform.GetWindowHeight());
 			glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
 
-			shader.Use();
-			/*float timeValue = glfwGetTime();
-			float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-			int vertexColorLocation = glGetUniformLocation(shaderProgram, "ourColor");
-			glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);*/
-			
-			glActiveTexture(GL_TEXTURE0);
-			glBindTexture(GL_TEXTURE_2D, texture);
-
+			shader.Bind();
+			fb.BindColorTexture();
 			glBindVertexArray(VAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
 			platform.Update();
 		}
+		fb.Destroy();
+		texture.Destroy();
+		shader.Destroy();
 	}
 	platform.Destroy();
 }

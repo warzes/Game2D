@@ -9,6 +9,18 @@
     <ClCompile Include="Platform.cpp">
       <Filter>Engine</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture2D.cpp">
+      <Filter>Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Framebuffer.cpp">
+      <Filter>Engine\Render</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Engine\Render</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlatformDefine.h" />
@@ -37,6 +49,18 @@
     <ClInclude Include="Matrix4.h">
       <Filter>Engine\VectorMath</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture2D.h">
+      <Filter>Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Framebuffer.h">
+      <Filter>Engine\Render</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Engine\Render</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -47,6 +71,9 @@
     </Filter>
     <Filter Include="Engine\VectorMath">
       <UniqueIdentifier>{7ae0c882-2ab8-49c5-9b08-3702506dbf90}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Render">
+      <UniqueIdentifier>{faaaf32f-e055-48fb-9be9-139664743d2a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
