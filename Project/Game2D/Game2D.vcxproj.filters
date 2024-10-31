@@ -21,6 +21,9 @@
     <ClCompile Include="Font.cpp">
       <Filter>Engine\Render</Filter>
     </ClCompile>
+    <ClCompile Include="GraphicsSystem.cpp">
+      <Filter>Engine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="PlatformDefine.h" />
@@ -30,24 +33,6 @@
     </ClInclude>
     <ClInclude Include="Platform.h">
       <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>Engine\VectorMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Engine\VectorMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector4.h">
-      <Filter>Engine\VectorMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix2.h">
-      <Filter>Engine\VectorMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix3.h">
-      <Filter>Engine\VectorMath</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix4.h">
-      <Filter>Engine\VectorMath</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>Engine\Render</Filter>
@@ -61,6 +46,9 @@
     <ClInclude Include="Font.h">
       <Filter>Engine\Render</Filter>
     </ClInclude>
+    <ClInclude Include="GraphicsSystem.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Engine">
@@ -68,9 +56,6 @@
     </Filter>
     <Filter Include="Game">
       <UniqueIdentifier>{c6898330-435a-42a0-9588-45b919fffe80}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\VectorMath">
-      <UniqueIdentifier>{7ae0c882-2ab8-49c5-9b08-3702506dbf90}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Render">
       <UniqueIdentifier>{faaaf32f-e055-48fb-9be9-139664743d2a}</UniqueIdentifier>

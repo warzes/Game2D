@@ -25,6 +25,10 @@
 #include <stb/stb_image.h>
 #include <stb/stb_truetype.h>
 
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
+
 #if defined(_MSC_VER)
 #	pragma warning(pop)
 #endif

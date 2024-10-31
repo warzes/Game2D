@@ -1,16 +1,11 @@
 ﻿#include "stdafx.h"
 #include "Core.h"
 #include "Platform.h"
-
-#include "Vector2.h"
-#include "Vector3.h"
-#include "Vector4.h"
-#include "Matrix2.h"
-#include "Matrix3.h"
-#include "Matrix4.h"
+#include "GraphicsSystem.h"
 #include "Shader.h"
 #include "Texture2D.h"
 #include "Framebuffer.h"
+#include "Font.h"
 
 #if defined(_MSC_VER)
 #	pragma comment( lib, "3rdpartyLib.lib" )
@@ -53,7 +48,9 @@ void main()
 int main()
 {
 	Platform platform;
-	if (platform.Create({}))
+	GraphicsSystem graphics;
+	if (   platform.Create({})
+		&& graphics.Create())
 	{
 		glEnable(GL_DEPTH_TEST);
 
@@ -103,14 +100,24 @@ int main()
 
 		Framebuffer fb;
 		fb.Create(120, 120);
-		
+
+
+		Font font;
+		font.Create("monaspace.ttf", 24);
+
+		graphics.orthoProj = glm::ortho(0.0f, 1600.0f, 900.0f, 0.0f, -1.0f, 1.0f);
+
+		float deltaTime = 0.0f;
+		float lastFrame = 0.0f;
+
 		while (!platform.ShouldClose())
 		{
+			float currentFrame = static_cast<float>(glfwGetTime());
+			deltaTime = currentFrame - lastFrame;
+			lastFrame = currentFrame;
+
 			if (platform.IsKeyPress(GLFW_KEY_ESCAPE))
 				platform.Exit();
-
-			//glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
-			//glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 			glEnable(GL_DEPTH_TEST);
 			fb.Bind();
@@ -132,11 +139,18 @@ int main()
 			glBindVertexArray(VAO);
 			glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
+			glEnable(GL_BLEND);
+			glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+			font.RenderWavyText(graphics, "the quick brown fox jumped \nover the lazy dog", { 100, 400 }, 0.25, { 0.4, 1.f }, { 1.f, 0.f, 1.f, 1.f }, 0.f, 5.f, 2.f, static_cast<float>(glfwGetTime()));
+			glDisable(GL_BLEND);
+
 			platform.Update();
 		}
+		font.Destroy();
 		fb.Destroy();
 		texture.Destroy();
 		shader.Destroy();
 	}
+	graphics.Destroy();
 	platform.Destroy();
 }
